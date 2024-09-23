@@ -1,14 +1,15 @@
-import Header from '@/components/layout/header'
-import { Button } from '@/components/ui/button'
-import { ModeToggle } from '@/components/ui/mode-toggle'
+import HorizontalList from '@/components/layout/horizontal-list'
+import DefaultLayout from '@/layout/default'
 
 function IndexPage() {
   return (
-    <div className='min-h-screen flex-col bg-zinc-950'>
-      <Header />
-      <Button>Hello World!</Button>
-      <ModeToggle />
-    </div>
+    <DefaultLayout>
+      <div className='flex flex-col gap-2 w-full'>
+        <HorizontalList type='POPULARITY' />
+        <HorizontalList type='TRENDING' />
+        <HorizontalList type='UPDATED_AT' />
+      </div>
+    </DefaultLayout>
   )
 }
 
