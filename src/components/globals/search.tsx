@@ -22,7 +22,7 @@ function Search() {
   const { data, isLoading } = useQuery({
     queryFn: () =>
       apiGet<MetaMangaResponse>(
-        `anilist/advanced-search?query=${searchQuery}&type=MANGA&sort=["POPULARITY_DESC", "SCORE_DESC"]`,
+        `anilist/advanced-search?query=${searchQuery}&type=MANGA&sort=["POPULARITY_DESC"]`,
         'META',
       ),
     queryKey: [searchQuery, 'search'],

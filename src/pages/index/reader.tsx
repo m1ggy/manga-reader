@@ -63,15 +63,23 @@ function Reader() {
 
     return chapter ? (
       <div className='flex gap-4 items-center'>
-        <Button
-          disabled={!hasPrevButton}
-          variant={'outline'}
-          onClick={() =>
-            (window.location.href = `/${mangaInfo?.id}/chapter/${mangaInfo?.chapters[chapterNumber - 2].id}`)
-          }
-        >
-          Previous{' '}
-        </Button>
+        {hasPrevButton ? (
+          <Button
+            variant={'outline'}
+            onClick={() =>
+              (window.location.href = `/${mangaInfo?.id}/chapter/${mangaInfo?.chapters[chapterNumber - 2].id}`)
+            }
+          >
+            Previous{' '}
+          </Button>
+        ) : (
+          <Button
+            onClick={() => navigate(`/${mangaInfo?.id}`)}
+            variant={'outline'}
+          >
+            Details
+          </Button>
+        )}
         <span className='text-sm font-semibold'>Chapter {chapterNumber}</span>
         {hasNextButton ? (
           <Button
@@ -83,7 +91,12 @@ function Reader() {
             Next
           </Button>
         ) : (
-          <Button onClick={() => navigate(`/${mangaInfo?.id}`)}>Details</Button>
+          <Button
+            onClick={() => navigate(`/${mangaInfo?.id}`)}
+            variant={'outline'}
+          >
+            Details
+          </Button>
         )}
       </div>
     ) : null
@@ -120,7 +133,7 @@ function Reader() {
       ) : null}
       {buttons}
       {data && data?.length ? (
-        <div className='flex flex-col items-center md:px-[20vw]'>
+        <div className='flex flex-col items-center lg:px-[10vw]'>
           {data.map((i) => (
             <div key={i.img}>
               <img

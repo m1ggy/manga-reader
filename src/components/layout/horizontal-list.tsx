@@ -7,7 +7,7 @@ import Loader from '../globals/loader'
 import { Button } from '../ui/button'
 import MiniPreview from '../ui/mini-preview'
 
-type ListType = 'UPDATED_AT' | 'POPULARITY' | 'TRENDING'
+type ListType = 'UPDATED_AT' | 'POPULARITY' | 'TRENDING' | 'SCORE'
 type HorizontalListProps = {
   type: ListType
 }
@@ -15,7 +15,7 @@ type HorizontalListProps = {
 function HorizontalList({ type }: HorizontalListProps) {
   function getTitle(typeToGet: ListType) {
     switch (typeToGet) {
-      case 'POPULARITY':
+      case 'SCORE':
         return 'Most Popular'
       case 'UPDATED_AT':
         return 'Latest Updates'
@@ -27,7 +27,7 @@ function HorizontalList({ type }: HorizontalListProps) {
   const { data, isLoading } = useQuery({
     queryFn: () =>
       apiGet<MetaMangaResponse>(
-        `anilist/advanced-search?type=MANGA&sort=["${type}","SCORE_DESC", "POPULARITY_DESC"]`,
+        `anilist/advanced-search?type=MANGA&sort=["${type}_DESC"]`,
         'META',
       ),
     queryKey: [type, 'manga', 'list'],
@@ -89,7 +89,7 @@ function HorizontalList({ type }: HorizontalListProps) {
             </Button>
           </div>
           <div
-            className='overflow-auto py-6 flex gap-2 px-2'
+            className='overflow-auto py-12 flex gap-2 px-2'
             ref={containerRef}
           >
             <div className='flex gap-2 overflow-visible'>

@@ -5,7 +5,7 @@ function IndexPage() {
   return (
     <DefaultLayout>
       <div className='flex flex-col gap-2 w-full'>
-        <HorizontalList type='POPULARITY' />
+        <HorizontalList type='SCORE' />
         <HorizontalList type='TRENDING' />
         <HorizontalList type='UPDATED_AT' />
       </div>
