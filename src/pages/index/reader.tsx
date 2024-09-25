@@ -109,10 +109,7 @@ function Reader() {
     mangaInfoLoading,
   ])
 
-  const scroll = (
-    e: React.MouseEvent<HTMLImageElement>,
-    direction: 'up' | 'down',
-  ) => {
+  const scroll = (direction: 'up' | 'down') => {
     const scrollAmount = 1000
 
     const targetPosition =
@@ -140,7 +137,7 @@ function Reader() {
                 src={i.img}
                 className='w-full select-none'
                 onContextMenu={(e) => e.preventDefault()}
-                onClick={(e) => scroll(e, 'down')}
+                onClick={() => scroll('down')}
               />
             </div>
           ))}

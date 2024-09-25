@@ -65,7 +65,7 @@ function MangaPage() {
             <div>
               <span>Chapters</span>
               <div className='flex flex-col gap-3 max-h-[60vh] overflow-auto'>
-                {data.chapters.map((chapter, i) => (
+                {data.chapters.map((chapter) => (
                   <div
                     className='flex flex-col gap-2 select-none cursor-pointer hover:bg-zinc-800 w-fit p-2 rounded-sm'
                     key={chapter.id}
