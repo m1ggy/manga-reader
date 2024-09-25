@@ -45,7 +45,7 @@ function Search() {
       </PopoverAnchor>
 
       <PopoverContent
-        className='overflow-auto w-[40vw] max-h-[80vh]'
+        className='overflow-auto lg:w-[40vw] max-h-[80vh] sm:w-full'
         onFocusOutside={() => setShow(false)}
       >
         <div className='flex flex-col gap-2 items-center justify-center'>
