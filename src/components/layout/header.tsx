@@ -2,6 +2,14 @@ import { Settings } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Search from '../globals/search'
 import { Button } from '../ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
 import { ModeToggle } from '../ui/mode-toggle'
 function Header() {
   const title = import.meta.env.VITE_TITLE ?? ''
@@ -25,9 +33,19 @@ function Header() {
       {/* ACCOUNT & DEVICE SETTINGS */}
       <div className='flex gap-2'>
         <div>
-          <Button variant={'outline'} size={'icon'}>
-            <Settings />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant={'outline'} size={'icon'}>
+                <Settings />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              <DropdownMenuLabel>Settings</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Hello</DropdownMenuItem>
+              <DropdownMenuItem>World</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <div>
           <ModeToggle />

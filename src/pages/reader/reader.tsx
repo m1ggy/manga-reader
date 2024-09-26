@@ -1,5 +1,12 @@
 import Loader from '@/components/globals/loader'
 import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import ReaderLayout from '@/layout/reader-layout'
 import { apiGet } from '@/lib/fetch'
 import { MetaManga, Page } from '@/lib/types'
@@ -26,8 +33,6 @@ function Reader() {
     enabled: Boolean(params.chapterId),
   })
 
-  console.log({ data, mangaInfo })
-
   const chapter = useMemo(() => {
     if (mangaInfo) {
       return mangaInfo.chapters.find((c) => c.id === params.chapterId)
@@ -45,7 +50,6 @@ function Reader() {
     if (!chapter) return false
 
     const index = mangaInfo.chapters.findIndex((c) => c.id == params.chapterId)
-    console.log({ index, chaps: mangaInfo.chapters })
 
     return Boolean(mangaInfo.chapters[index + 1])
   }, [mangaInfo, mangaInfoLoading, params, chapter])
@@ -123,11 +127,39 @@ function Reader() {
     })
   }
 
+  const chapterSelection = useMemo(() => {
+    if (!mangaInfo) return null
+
+    return (
+      <div className='lg:w-64'>
+        <Select
+          value={chapter?.id}
+          onValueChange={(value) =>
+            (window.location.href = `/${mangaInfo?.id}/chapter/${value}`)
+          }
+        >
+          <SelectTrigger>
+            <SelectValue placeholder='Select chapter' />
+          </SelectTrigger>
+          <SelectContent>
+            {mangaInfo.chapters.map((chap) => (
+              <SelectItem value={chap.id} key={chap.id}>
+                {chap.title || chap.id}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    )
+  }, [mangaInfo, chapter])
+
   return (
     <ReaderLayout>
       {mangaInfo ? (
         <span className='text-lg font-semibold'>{mangaInfo.title.english}</span>
       ) : null}
+
+      {chapterSelection}
       {buttons}
       {data && data?.length ? (
         <div className='flex flex-col items-center lg:px-[10vw]'>

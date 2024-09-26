@@ -23,8 +23,6 @@ function MangaPage() {
   })
   const navigate = useNavigate()
 
-  console.log({ data })
-
   return (
     <DefaultLayout>
       {isLoading ? (

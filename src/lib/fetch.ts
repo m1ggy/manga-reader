@@ -67,10 +67,7 @@ export async function apiPost<T, K>(
   }
 }
 
-export async function apiGet<T>(
-  uri: string,
-  type?: API_TYPE,
-): Promise<T | null> {
+export async function apiGet<T>(uri: string, type?: API_TYPE): Promise<T> {
   try {
     const request = await apiFetch(
       uri,
