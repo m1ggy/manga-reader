@@ -18,7 +18,9 @@ function Header() {
       </div>
       {/* NAVIGATIONS */}
       <div className='flex gap-2'>
-        <Button variant={'outline'}>Browse</Button>
+        <Button variant={'outline'} onClick={() => navigate('/browse')}>
+          Browse
+        </Button>
       </div>
       {/* ACCOUNT & DEVICE SETTINGS */}
       <div className='flex gap-2'>

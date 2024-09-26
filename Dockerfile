@@ -1,11 +1,11 @@
 FROM node:20 AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-# Define build arguments for environment variables
+LABEL version="1.0.0"
+LABEL description="Mangachows Docker Image"
 ARG VITE_TITLE
 ARG VITE_API_URL
 ARG VITE_META_URL
-# Set environment variables during the build process
 ENV VITE_TITLE=$VITE_TITLE
 ENV VITE_API_URL=$VITE_API_URL
 ENV VITE_META_URL=$VITE_META_URL

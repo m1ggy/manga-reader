@@ -32,6 +32,9 @@ dependencies:
   clsx:
     specifier: ^2.1.1
     version: 2.1.1
+  country-flag-icons:
+    specifier: ^1.5.13
+    version: 1.5.13
   lucide-react:
     specifier: ^0.440.0
     version: 0.440.0(react@18.3.1)
@@ -2702,6 +2705,13 @@ packages:
         integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==,
       }
     dev: true
+
+  /country-flag-icons@1.5.13:
+    resolution:
+      {
+        integrity: sha512-4JwHNqaKZ19doQoNcBjsoYA+I7NqCH/mC/6f5cBWvdKzcK5TMmzLpq3Z/syVHMHJuDGFwJ+rPpGizvrqJybJow==,
+      }
+    dev: false
 
   /cross-spawn@7.0.3:
     resolution:
