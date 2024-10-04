@@ -4,9 +4,12 @@
 echo "VITE_TITLE=\"Mangachows\"" >> .env
 echo "VITE_API_URL=https://api.mangachows.com/manga/mangadex/" >> .env
 echo "VITE_META_URL=https://api.mangachows.com/meta/" >> .env
-
+pm2 restart 1
 # Install project dependencies
 npm install && npm update && npm cache clean --force
+
+#Build the application
+npm build
 
 # Check if NVM is installed
 if [ ! -d "$HOME/.nvm" ]; then

@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky",
-    "start": "npx serve -s dist"
+    "start": "npx serve -s dist -p 3001"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
