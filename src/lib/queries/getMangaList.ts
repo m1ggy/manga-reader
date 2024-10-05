@@ -1,15 +1,22 @@
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { apiGet } from '../fetch'
 import { MetaMangaResponse } from '../types'
 
 function useMangaList(type: string) {
-  return useQuery({
-    queryFn: () =>
+  return useInfiniteQuery({
+    queryKey: ['manga', 'list', type],
+    queryFn: ({ pageParam = 1 }) =>
       apiGet<MetaMangaResponse>(
-        `anilist/advanced-search?type=MANGA&sort=["${type}_DESC"]`,
+        `anilist/advanced-search?type=MANGA&sort=["${type}_DESC"]&page=${pageParam}`,
         'META',
       ),
-    queryKey: [type, 'manga', 'list'],
+    getNextPageParam: (lastPage) => {
+      if (lastPage.hasNextPage) {
+        return lastPage.currentPage + 1
+      }
+      return undefined
+    },
+    initialPageParam: 1,
   })
 }
 

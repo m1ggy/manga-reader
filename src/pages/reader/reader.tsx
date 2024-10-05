@@ -1,4 +1,5 @@
 import Loader from '@/components/globals/loader'
+import ChapterPage from '@/components/globals/page'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -9,7 +10,7 @@ import {
 } from '@/components/ui/select'
 import ReaderLayout from '@/layout/reader-layout'
 import { apiGet } from '@/lib/fetch'
-import { MetaManga, Page } from '@/lib/types'
+import type { MetaManga, Page } from '@/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -26,7 +27,7 @@ function Reader() {
   const { data, isLoading } = useQuery({
     queryFn: () =>
       apiGet<Page[]>(
-        `anilist-manga/read?chapterId=${params.chapterId}&provider=["${'MangaDex'}"]`,
+        `anilist-manga/read?chapterId=${params.chapterId}`,
         'META',
       ),
     queryKey: [params.chapterId, 'manga-chapter'],
@@ -162,16 +163,15 @@ function Reader() {
       {chapterSelection}
       {buttons}
       {data && data?.length ? (
-        <div className='flex flex-col items-center lg:px-[10vw]'>
-          {data.map((i) => (
-            <div key={i.img}>
-              <img
-                src={i.img}
-                className='w-full select-none'
-                onContextMenu={(e) => e.preventDefault()}
-                onClick={() => scroll('down')}
-              />
-            </div>
+        <div className='flex flex-col items-center lg:px-[10vw] w-full'>
+          {data.map((i, index) => (
+            <ChapterPage
+              src={i.img}
+              onClick={() => scroll('down')}
+              key={index}
+              mangaId={mangaInfo?.id as string}
+              chapterId={chapter?.id as string}
+            />
           ))}
         </div>
       ) : null}

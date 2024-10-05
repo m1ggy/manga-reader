@@ -1,7 +1,5 @@
-import genres from '@/assets/constants/genres.json'
 function Sort() {
-  console.log({ genres })
-  return <div>Sort</div>
+  return <div></div>
 }
 
 export default Sort
