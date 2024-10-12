@@ -1,4 +1,5 @@
 import { MetaManga } from '@/lib/types'
+import { proxyImage } from '@/lib/utils'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -39,7 +40,7 @@ function MiniPreview({ data }: MiniPreviewProps) {
           <div>
             <div className='h-fit flex justify-center'>
               <img
-                src={data.image}
+                src={proxyImage(data.image)}
                 alt={
                   data.title.english ??
                   data.title.native ??

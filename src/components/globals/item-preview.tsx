@@ -1,4 +1,5 @@
 import { Manga, MetaManga } from '@/lib/types'
+import { proxyImage } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import {
   Card,
@@ -40,7 +41,11 @@ function ItemPreview({ data }: ItemPreviewProps) {
             <p className='text-xs'>Loading image...</p>
           </div>
         ) : (
-          <img src={data.image} alt={data.title.userPreferred} width={200} />
+          <img
+            src={proxyImage(data.image, `${window.location.origin}`)}
+            alt={data.title.userPreferred}
+            width={200}
+          />
         )}
       </CardHeader>
       <CardContent>

@@ -1,6 +1,10 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export function proxyImage(url: string, referrer = window.location.origin) {
+  return `${import.meta.env.VITE_BASE_API_URL}/utils/image-proxy?url=${url}&headers={"referer": "${referrer}"}`
 }
