@@ -1,6 +1,6 @@
 import useMangaList from '@/lib/queries/getMangaList'
 import { useEffect, useRef } from 'react'
-import Loader from '../globals/loader'
+import PreviewSkeleton from '../globals/preview-skeleton'
 import MiniPreview from '../ui/mini-preview'
 
 function GridList() {
@@ -37,9 +37,10 @@ function GridList() {
   return (
     <div ref={containerRef} className='h-[80vh] overflow-y-auto'>
       {isLoading ? (
-        <div className='flex gap-2'>
-          <Loader />
-          Loading...
+        <div className='grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-2'>
+          {new Array(15).fill(null).map((_, i) => (
+            <PreviewSkeleton key={i} />
+          ))}
         </div>
       ) : data ? (
         <div className='grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-2'>

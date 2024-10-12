@@ -3,7 +3,7 @@ import { MetaMangaResponse } from '@/lib/types'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect, useRef } from 'react'
-import Loader from '../globals/loader'
+import PreviewSkeleton from '../globals/preview-skeleton'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardTitle } from '../ui/card'
 import MiniPreview from '../ui/mini-preview'
@@ -112,8 +112,12 @@ function HorizontalList({ type }: HorizontalListProps) {
       <CardContent className='p-0'>
         <div>
           {isLoading ? (
-            <div className='flex justify-center'>
-              <Loader />
+            <div className='flex justify-center gap-2'>
+              <PreviewSkeleton />
+              <PreviewSkeleton />
+              <PreviewSkeleton />
+              <PreviewSkeleton />
+              <PreviewSkeleton />
             </div>
           ) : (
             <div className='flex gap-2'>

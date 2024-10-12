@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { Skeleton } from '../ui/skeleton'
 
 type PageProps = {
@@ -24,10 +25,18 @@ function Page({ src, onClick, mangaId, chapterId }: PageProps) {
     queryKey: [src, 'page'],
   })
 
+  useEffect(() => {
+    return () => {
+      if (data) {
+        URL.revokeObjectURL(data)
+      }
+    }
+  }, [])
+
   if (isLoading || !data)
     return (
       <div className='w-full'>
-        <Skeleton className='rounded w-full h-[70vh]' />
+        <Skeleton className='rounded w-[70vh] h-[70vh]' />
       </div>
     )
 

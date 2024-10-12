@@ -30,12 +30,15 @@ function ItemPreview({ data }: ItemPreviewProps) {
       }}
     >
       <CardHeader>
-        <CardTitle>{data.title.userPreferred}</CardTitle>
+        <CardTitle>{data.title.english || data.title.romaji}</CardTitle>
         <CardDescription className='truncate select-none'>
           {data.description}
         </CardDescription>
         {loadingImage ? (
-          <Loader />
+          <div className='flex gap-2 '>
+            <Loader />
+            <p className='text-xs'>Loading image...</p>
+          </div>
         ) : (
           <img src={data.image} alt={data.title.userPreferred} width={200} />
         )}

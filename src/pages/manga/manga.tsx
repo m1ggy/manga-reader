@@ -1,13 +1,12 @@
-import Loader from '@/components/globals/loader'
 import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import DefaultLayout from '@/layout/default'
 import { apiGet } from '@/lib/fetch'
 import { MetaManga } from '@/lib/types'
@@ -26,9 +25,31 @@ function MangaPage() {
   return (
     <DefaultLayout>
       {isLoading ? (
-        <div className='flex gap-2'>
-          <Loader />
-          <span className='text-sm font-bold'>Loading manga...</span>
+        <div className='w-full'>
+          <Skeleton className='w-full h-[90vh] flex flex-col gap-2 p-5'>
+            <Skeleton className='w-1/2 h-10' />
+            <div className='flex justify-center'>
+              <Skeleton className='w-[250px] h-[350px]' />
+            </div>
+            <Skeleton className='w-1/3 h-10' />
+            <div className='flex gap-2'>
+              <Skeleton className='w-24 h-6' />
+              <Skeleton className='w-24 h-6' />
+              <Skeleton className='w-24 h-6' />
+              <Skeleton className='w-24 h-6' />
+            </div>
+            <Skeleton className='w-full h-64' />
+            <Skeleton className='w-1/3 h-10' />
+            <div className='flex flex-col gap-1'>
+              <Skeleton className='w-1/4 h-6' />
+              <Skeleton className='w-1/4 h-6' />
+              <Skeleton className='w-1/4 h-6' />
+              <Skeleton className='w-1/4 h-6' />
+              <Skeleton className='w-1/4 h-6' />
+              <Skeleton className='w-1/4 h-6' />
+              <Skeleton className='w-1/4 h-6' />
+            </div>
+          </Skeleton>
         </div>
       ) : null}
 
@@ -77,7 +98,6 @@ function MangaPage() {
               </div>
             </div>
           </CardContent>
-          <CardFooter></CardFooter>
         </Card>
       ) : null}
     </DefaultLayout>

@@ -25,9 +25,9 @@ function IndexPage() {
         </AlertDescription>
       </Alert>
       <div className='flex flex-col gap-2 w-full'>
-        <HorizontalList type='SCORE' />
         <HorizontalList type='TRENDING' />
-        <HorizontalList type='UPDATED_AT' />
+        <HorizontalList type='SCORE' />
+        {/* <HorizontalList type='UPDATED_AT' /> */}
       </div>
     </DefaultLayout>
   )

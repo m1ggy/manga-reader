@@ -27,7 +27,7 @@ function MiniPreview({ data }: MiniPreviewProps) {
             setPopoverOpen(false)
           }}
           className={clsx(
-            'min-w-40 h-80 cursor-pointer flex items-center transition-all justify-center duration-300',
+            'w-40 h-80 cursor-pointer flex items-center transition-all justify-center duration-300',
             isHovering && 'scale-105',
           )}
           onClick={() => navigate(`/${data.id}`)}
@@ -51,8 +51,8 @@ function MiniPreview({ data }: MiniPreviewProps) {
             <div>
               <p
                 className={clsx(
-                  'text-xs text-ellipsis overflow-hidden text-center max-h-5 transition-all',
-                  isHovering && 'max-h-16',
+                  'text-xs text-ellipsis overflow-hidden text-centertransition-all line-clamp-1',
+                  isHovering && 'line-clamp-3',
                 )}
               >
                 {data.title.english ?? data.title.romaji}
