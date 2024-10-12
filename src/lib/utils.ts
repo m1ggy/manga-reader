@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function proxyImage(url: string, referrer = window.location.origin) {
-  console.log(referrer)
+  referrer
   //DISABLE PROXY FOR NOW
   // return `${import.meta.env.VITE_BASE_API_URL}/utils/image-proxy?url=${url}&headers={"referer": "${referrer}"}`
   return url

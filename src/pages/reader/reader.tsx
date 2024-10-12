@@ -13,8 +13,8 @@ import { apiGet } from '@/lib/fetch'
 import type { MetaManga, Page } from '@/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { Helmet } from 'react-helmet'
 import { useNavigate, useParams } from 'react-router-dom'
-
 function Reader() {
   const navigate = useNavigate()
   const params = useParams<Record<'id' | 'chapterId', string>>()
@@ -159,6 +159,29 @@ function Reader() {
       {mangaInfo ? (
         <span className='text-lg font-semibold'>{mangaInfo.title.english}</span>
       ) : null}
+
+      <Helmet titleTemplate='%s | Mangachows'>
+        <title>
+          {mangaInfo?.title?.english ?? ''} --{' '}
+          {chapter?.title ?? chapter?.id ?? ''}
+        </title>
+        <meta name='description' content='Home page for mangachows.com' />
+        <meta
+          name='keywords'
+          content='Manga,One Piece, Jujutsu Kaisen, Manhwa, free manhwa, free manga, bleach, demon slayer'
+        />
+        <link rel='canonical' href={window.location.origin} />
+        <meta property='og:title' content='Mangachows' />
+        <meta property='og:description' content='Read manga in Mangachows!' />
+        <meta property='og:image' content={mangaInfo?.cover ?? '/icon.ico'} />
+        <meta property='og:url' content={window.location.origin} />
+        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:title' content='Mangachows' />
+        <meta name='twitter:description' content='Read manga in Mangachows!' />
+        <meta name='twitter:image' content={mangaInfo?.cover ?? '/icon.ico'} />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+        <link rel='icon' href='/favicon.ico' />
+      </Helmet>
 
       {chapterSelection}
       {buttons}
