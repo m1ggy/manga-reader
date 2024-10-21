@@ -22,16 +22,14 @@ jobs:
             trap 'echo "An error occurred on line $LINENO"; exit 1' ERR
 
             echo "Navigating to the project directory or cloning the repository"
-            # Navigate to the directory where the project is stored
             if [ -d "$HOME/apps/reader/.git" ]; then
-                echo "Directory exists and is a git repository. Pulling the latest changes..."
-                cd $HOME/apps/reader
-                git pull origin main
+              echo "Directory exists and is a git repository. Pulling the latest changes..."
+              cd $HOME/apps/reader
+              git pull origin main
             else
-                echo "Directory does not exist or is not a git repository. Cloning repository..."
-                rm -rf $HOME/apps/reader  # Remove if a non-git directory exists
-                git clone git@github.com:m1ggy/manga-reader.git $HOME/apps/reader
-                cd $HOME/apps/reader
+              echo "Directory does not exist or is not a git repository. Cloning repository..."
+              rm -rf $HOME/apps/reader  # Remove if a non-git directory exists
+              git clone git@github.com:m1ggy/manga-reader.git $HOME/apps/reader
             fi
 
             echo "Checking if nvm is installed"
@@ -39,19 +37,13 @@ jobs:
             if [ -s "$HOME/.nvm/nvm.sh" ]; then
               echo "nvm is already installed. Sourcing nvm..."
               export NVM_DIR="$HOME/.nvm"
-              source "$NVM_DIR/nvm.sh"
-              [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
+              bash -l -c "source $NVM_DIR/nvm.sh; [ -s \"$NVM_DIR/bash_completion\" ] && source \"$NVM_DIR/bash_completion\"; nvm install $(cat .nvmrc)"
             else
               echo "Installing nvm..."
               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
               export NVM_DIR="$HOME/.nvm"
-              source "$NVM_DIR/nvm.sh"
-              [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
+              bash -l -c "source $NVM_DIR/nvm.sh; [ -s \"$NVM_DIR/bash_completion\" ] && source \"$NVM_DIR/bash_completion\"; nvm install $(cat .nvmrc)"
             fi
-
-            echo "Loading nvm and installing Node.js version from .nvmrc"
-            # Load nvm and install Node.js version from .nvmrc
-            nvm install $(cat .nvmrc)
 
             echo "Checking if pm2 is installed"
             # Install pm2 if not installed
@@ -74,9 +66,9 @@ jobs:
             echo "Adding environment variables to .env"
             # Add env variables
             echo "VITE_TITLE=\"Mangachows\"" >> .env
-            echo "VITE_API_URL=\"https://api.mangachows.com/manga/mangadex/\"" >> .env
-            echo "VITE_META_URL=\"https://api.mangachows.com/meta/\"" >> .env
-            echo "VITE_BASE_API_URL=\"https://api.mangachows.com\"" >> .env
+            echo "VITE_API_URL=\"https://server.mangachows.com/manga/mangadex/\"" >> .env
+            echo "VITE_META_URL=\"https://server.mangachows.com/meta/\"" >> .env
+            echo "VITE_BASE_API_URL=\"https://server.mangachows.com\"" >> .env
 
             echo "Installing dependencies and building the application"
             # Install dependencies and build the application
