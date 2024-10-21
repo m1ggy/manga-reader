@@ -30,6 +30,7 @@ jobs:
               echo "Directory does not exist or is not a git repository. Cloning repository..."
               rm -rf $HOME/apps/reader  # Remove if a non-git directory exists
               git clone git@github.com:m1ggy/manga-reader.git $HOME/apps/reader
+              cd $HOME/apps/reader
             fi
 
             echo "Checking if nvm is installed"
