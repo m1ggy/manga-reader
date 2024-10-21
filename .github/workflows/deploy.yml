@@ -88,4 +88,5 @@ jobs:
 
             echo "Reloading Caddy"
             # Reload Caddy
-            sudo caddy reload
+            caddy reload --config /etc/caddy/Caddyfile
+            echo "Manga reader deployed!"
