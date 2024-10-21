@@ -36,7 +36,7 @@ jobs:
 
             echo "Checking if nvm is installed"
             # Install nvm if it's not installed
-            if ! command -v nvm &> /dev/null; then
+            if [ -s "$HOME/.nvm/nvm.sh" ]; then
               echo "Installing nvm..."
               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
               source $HOME/.nvm/nvm.sh
