@@ -46,7 +46,6 @@ jobs:
 
             echo "Loading nvm and installing Node.js version from .nvmrc"
             # Load nvm and install Node.js version from .nvmrc
-            source $HOME/.nvm/nvm.sh
             nvm install $(cat .nvmrc)
 
             echo "Checking if pm2 is installed"
