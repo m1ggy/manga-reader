@@ -1,0 +1,62 @@
+name: Deploy to VPS
+
+on:
+  push: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+          # Navigate to the directory where the project is stored
+          if [ ! -d "~/apps/reader" ]; then
+            git clone https://github.com/m1ggy/manga-reader.git ~/apps/reader
+          else
+            cd ~/apps/reader
+            git pull origin main
+          fi
+
+          # Install nvm if it's not installed
+          if ! command -v nvm &> /dev/null; then
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+            source ~/.nvm/nvm.sh
+          fi
+
+          # Load nvm and install Node.js version from .nvmrc
+          source ~/.nvm/nvm.sh
+          nvm install $(cat .nvmrc)
+
+          # Install pm2 if not installed
+          if ! command -v pm2 &> /dev/null; then
+            npm install -g pm2
+          fi
+
+          # Install pnpm if not installed
+          if ! command -v pnpm &> /dev/null; then
+            npm install -g pnpm
+          fi
+
+          # Add env variables
+          echo "VITE_TITLE="Mangachows" >> .env
+          echo "VITE_API_URL="https://server.mangachows.com/manga/mangadex/" >> .env
+          echo "VITE_META_URL="https://server.mangachows.com/meta/" >> .env
+          echo "VITE_BASE_API_URL="https://server.mangachows.com" >> .env
+
+          # Install dependencies and build the application
+          pnpm install
+          pnpm run build
+
+          # Start the application using pm2
+          pm2 start ecosystem.config.js || pm2 reload ecosystem.config.js
+
+              - name: Check if Caddy is installed, and install if necessary
+
+          # Reload Caddy
+          sudo caddy reload
