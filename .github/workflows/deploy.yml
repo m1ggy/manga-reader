@@ -3,7 +3,7 @@ name: Deploy to VPS
 on:
   push: 
     branches: 
-        - main
+      - main
 
 jobs:
   build:
@@ -17,48 +17,70 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            # Enable error handling
+            set -e
+            trap 'echo "An error occurred on line $LINENO"; exit 1' ERR
+
+            echo "Navigating to the project directory or cloning the repository"
             # Navigate to the directory where the project is stored
             if [ ! -d "~/apps/reader" ]; then
-                git clone git@github.com:m1ggy/manga-reader.git ~/apps/reader
+              echo "Cloning repository..."
+              git clone git@github.com:m1ggy/manga-reader.git ~/apps/reader
             else
-                cd ~/apps/reader
-                git pull origin main
+              echo "Pulling the latest changes from the repository..."
+              cd ~/apps/reader
+              git pull origin main
             fi
 
+            echo "Checking if nvm is installed"
             # Install nvm if it's not installed
             if ! command -v nvm &> /dev/null; then
-                curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-                source ~/.nvm/nvm.sh
+              echo "Installing nvm..."
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+              source ~/.nvm/nvm.sh
+            else
+              echo "nvm is already installed"
             fi
 
+            echo "Loading nvm and installing Node.js version from .nvmrc"
             # Load nvm and install Node.js version from .nvmrc
             source ~/.nvm/nvm.sh
             nvm install $(cat .nvmrc)
 
+            echo "Checking if pm2 is installed"
             # Install pm2 if not installed
             if ! command -v pm2 &> /dev/null; then
-                npm install -g pm2
+              echo "Installing pm2..."
+              npm install -g pm2
+            else
+              echo "pm2 is already installed"
             fi
 
+            echo "Checking if pnpm is installed"
             # Install pnpm if not installed
             if ! command -v pnpm &> /dev/null; then
-                npm install -g pnpm
+              echo "Installing pnpm..."
+              npm install -g pnpm
+            else
+              echo "pnpm is already installed"
             fi
 
+            echo "Adding environment variables to .env"
             # Add env variables
-            echo "VITE_TITLE="Mangachows" >> .env
-            echo "VITE_API_URL="https://server.mangachows.com/manga/mangadex/" >> .env
-            echo "VITE_META_URL="https://server.mangachows.com/meta/" >> .env
-            echo "VITE_BASE_API_URL="https://server.mangachows.com" >> .env
+            echo "VITE_TITLE=\"Mangachows\"" >> .env
+            echo "VITE_API_URL=\"https://api.mangachows.com/manga/mangadex/\"" >> .env
+            echo "VITE_META_URL=\"https://api.mangachows.com/meta/\"" >> .env
+            echo "VITE_BASE_API_URL=\"https://api.mangachows.com\"" >> .env
 
+            echo "Installing dependencies and building the application"
             # Install dependencies and build the application
             pnpm install
             pnpm run build
 
+            echo "Starting or reloading the application with pm2"
             # Start the application using pm2
             pm2 start ecosystem.config.js || pm2 reload ecosystem.config.js
 
-                - name: Check if Caddy is installed, and install if necessary
-
+            echo "Reloading Caddy"
             # Reload Caddy
             sudo caddy reload
