@@ -39,13 +39,14 @@ jobs:
             if ! command -v nvm &> /dev/null; then
               echo "Installing nvm..."
               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-              source$HOME/.nvm/nvm.sh
+              source $HOME/.nvm/nvm.sh
             else
               echo "nvm is already installed"
             fi
 
             echo "Loading nvm and installing Node.js version from .nvmrc"
             # Load nvm and install Node.js version from .nvmrc
+            source $HOME/.nvm/nvm.sh
             nvm install $(cat .nvmrc)
 
             echo "Checking if pm2 is installed"
