@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
@@ -74,9 +74,9 @@ jobs:
             echo "Adding environment variables to .env"
             # Add env variables
             echo "VITE_TITLE=\"Mangachows\"" >> .env
-            echo "VITE_API_URL=\"https://server.mangachows.com/manga/mangadex/\"" >> .env
-            echo "VITE_META_URL=\"https://server.mangachows.com/meta/\"" >> .env
-            echo "VITE_BASE_API_URL=\"https://server.mangachows.com\"" >> .env
+            echo "VITE_API_URL=\"https://api.mangachows.com/manga/mangadex/\"" >> .env
+            echo "VITE_META_URL=\"https://api.mangachows.com/meta/\"" >> .env
+            echo "VITE_BASE_API_URL=\"https://api.mangachows.com\"" >> .env
 
             echo "Installing dependencies and building the application"
             # Install dependencies and build the application
