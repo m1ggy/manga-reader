@@ -148,7 +148,7 @@ function Reader() {
         <Select
           value={chapter?.id}
           onValueChange={(value) =>
-            (window.location.href = `/${mangaInfo?.id}/chapter/${value}`)
+            (window.location.href = `/${mangaInfo?.id}/chapter?id=${value}`)
           }
         >
           <SelectTrigger>
