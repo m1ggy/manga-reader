@@ -14,13 +14,25 @@ import type { MetaManga, Page } from '@/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Helmet } from 'react-helmet'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 function Reader() {
   const navigate = useNavigate()
-  const params = useParams<Record<'id' | 'chapterId', string>>()
+  const params: Record<string, string> = useParams() as unknown as Record<
+    string,
+    string
+  >
+  const [searchParams] = useSearchParams()
+
+  params.chapterId = decodeURIComponent(searchParams.get('id') ?? '')
+
+  console.log({ params, searchParams })
 
   const { data: mangaInfo, isLoading: mangaInfoLoading } = useQuery({
-    queryFn: () => apiGet<MetaManga>(`anilist-manga/info/${params.id}`, 'META'),
+    queryFn: () =>
+      apiGet<MetaManga>(
+        `anilist-manga/info/${params.id}?provider=mangadex`,
+        'META',
+      ),
     queryKey: [params.id, 'manga-info'],
   })
 
@@ -72,7 +84,7 @@ function Reader() {
           <Button
             variant={'outline'}
             onClick={() =>
-              (window.location.href = `/${mangaInfo?.id}/chapter/${mangaInfo?.chapters[chapterNumber - 2].id}`)
+              (window.location.href = `/${mangaInfo?.id}/chapter?id=${mangaInfo?.chapters[chapterNumber - 2].id}`)
             }
           >
             Previous{' '}
@@ -90,7 +102,7 @@ function Reader() {
           <Button
             variant={'outline'}
             onClick={() =>
-              (window.location.href = `/${mangaInfo?.id}/chapter/${mangaInfo?.chapters[chapterNumber].id}`)
+              (window.location.href = `/${mangaInfo?.id}/chapter?id=${mangaInfo?.chapters[chapterNumber].id}`)
             }
           >
             Next

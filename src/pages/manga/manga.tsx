@@ -18,7 +18,11 @@ function MangaPage() {
   const params = useParams<Record<'id', string>>()
 
   const { data, isLoading } = useQuery({
-    queryFn: () => apiGet<MetaManga>(`anilist-manga/info/${params.id}`, 'META'),
+    queryFn: () =>
+      apiGet<MetaManga>(
+        `anilist-manga/info/${params.id}?provider=mangadex`,
+        'META',
+      ),
     queryKey: [params.id, 'manga-info'],
   })
   const navigate = useNavigate()
@@ -108,7 +112,9 @@ function MangaPage() {
                   <div
                     className='flex flex-col gap-2 select-none cursor-pointer hover:bg-zinc-800 w-fit p-2 rounded-sm'
                     key={chapter.id}
-                    onClick={() => navigate(`chapter/${chapter.id}`)}
+                    onClick={() =>
+                      navigate(`chapter?id=${encodeURIComponent(chapter.id)}`)
+                    }
                   >
                     <span>
                       {index + 1}. {chapter.title || `Chapter ${index + 1}`}

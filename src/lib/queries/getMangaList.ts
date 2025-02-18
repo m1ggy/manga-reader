@@ -7,7 +7,7 @@ function useMangaList(type: string) {
     queryKey: ['manga', 'list', type],
     queryFn: ({ pageParam = 1 }) =>
       apiGet<MetaMangaResponse>(
-        `anilist/advanced-search?type=MANGA&sort=["${type}_DESC"]&page=${pageParam}`,
+        `anilist/advanced-search?type=MANGA&sort=["${type}_DESC"]&page=${pageParam}&provider=mangadex`,
         'META',
       ),
     getNextPageParam: (lastPage) => {
